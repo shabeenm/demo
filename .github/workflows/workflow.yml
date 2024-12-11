@@ -46,7 +46,7 @@ jobs:
         run: flutter clean
       - name: Build APK
         run: flutter build apk --debug --split-per-abi
-      - name: Push to Releases
+      - name: Push to Releases Apk
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*"
@@ -54,6 +54,8 @@ jobs:
           token: ${{ secrets.MY_TOKEN }}
       - name: Build Bundle
         run: flutter build appbundle --release
+      - name: Push to Releases Bundle
+        uses: ncipollo/release-action@v2
         with:
           artifacts: "build/app/outputs/bundle/*"
           tag: release-v1.0.${{ github.run_number }}
