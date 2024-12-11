@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
 
   workflow_dispatch:
 
@@ -27,8 +28,8 @@ jobs:
       - name: Run test cases
         run: flutter test
 
-  build_appbundle:
-    name: Flutter Release
+  build_app_bundle:
+    name: Flutter Release APK
     runs-on: macos-latest
     needs: [ flutter_test ]
     steps:
@@ -46,9 +47,11 @@ jobs:
         run: flutter clean
       - name: Build APK
         run: flutter build apk --debug --split-per-abi
-      - name: Push to Releases
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/debug/*"
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.MY_TOKEN }}
+#      - name: Push to Releases
+#        uses: ncipollo/release-action@v1
+#        with:
+#          artifacts: "build/app/outputs/apk/debug/*"
+#          tag: v1.0.${{ github.run_number }}
+#          token: ${{ secrets.MY_TOKEN }}
+      - name: Build Bundle
+        run: flutter build appbundle --release
