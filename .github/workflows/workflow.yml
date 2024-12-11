@@ -55,7 +55,7 @@ jobs:
       - name: Build Bundle
         run: flutter build appbundle --release
       - name: Push to Releases Bundle
-        uses: ncipollo/release-action@v2
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/bundle/*"
           tag: release-v1.0.${{ github.run_number }}
