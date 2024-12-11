@@ -54,3 +54,7 @@ jobs:
           token: ${{ secrets.MY_TOKEN }}
       - name: Build Bundle
         run: flutter build appbundle --release
+        with:
+          artifacts: "build/app/outputs/bundle/*"
+          tag: release-v1.0.${{ github.run_number }}
+          token: ${{ secrets.MY_TOKEN }}
