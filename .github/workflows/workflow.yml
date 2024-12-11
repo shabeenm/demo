@@ -27,8 +27,8 @@ jobs:
       - name: Run test cases
         run: flutter test
 
-  build_app_bundle:
-    name: Flutter Release APK
+  build_appbundle:
+    name: Flutter Release - Android
     runs-on: macos-latest
     needs: [ flutter_test ]
     steps:
@@ -46,7 +46,7 @@ jobs:
         run: flutter clean
       - name: Build APK
         run: flutter build apk --debug --split-per-abi
-      - name: Push to Releases Apk
+      - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/apk/debug/*"
@@ -59,4 +59,34 @@ jobs:
         with:
           artifacts: "build/app/outputs/bundle/release/*"
           tag: release-v1.0.${{ github.run_number }}
+          token: ${{ secrets.MY_TOKEN }}
+
+  build_ios:
+    name: Flutter Release - iOS
+    runs-on: macos-latest
+    needs: [ flutter_test ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: "17"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - name: Get dependencies
+        run: flutter pub get
+      - name: Clean build
+        run: flutter clean
+      - name: Install CocoaPods dependencies
+        run: |
+          cd ios
+          pod install --repo-update
+      - name: Build iOS app
+        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/ios/ipa/*"
+          tag: ios-release_v1.0.${{ github.run_number }}
           token: ${{ secrets.MY_TOKEN }}
