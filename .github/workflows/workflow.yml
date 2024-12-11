@@ -57,6 +57,6 @@ jobs:
       - name: Push to Releases Bundle
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/bundle/*"
+          artifacts: "build/app/outputs/bundle/release/*"
           tag: release-v1.0.${{ github.run_number }}
           token: ${{ secrets.MY_TOKEN }}
