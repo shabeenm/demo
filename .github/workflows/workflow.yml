@@ -27,7 +27,7 @@ jobs:
       - name: Run test cases
         run: flutter test
 
-  build_appbundle:
+  build_android:
     name: Flutter Release - Android
     runs-on: macos-latest
     needs: [ flutter_test ]
