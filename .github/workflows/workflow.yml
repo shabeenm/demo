@@ -83,8 +83,8 @@ jobs:
           cd ios
           [ -f Podfile ] || pod init
           pod install --repo-update
-      - name: Build iOS app
-        run: flutter build ios
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
 #      - name: Build iOS app
 #        run: flutter build ipa --export-options-plist=ios/ExportOptions.plist
 #      - name: Push to Releases
