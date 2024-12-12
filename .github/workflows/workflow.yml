@@ -85,6 +85,8 @@ jobs:
           pod install --repo-update
       - name: Build iOS
         run: flutter build ios --release --no-codesign
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
         with:
           artifacts: "build/ios/ipa/*"
           tag: ios-v1.0.${{ github.run_number }}
